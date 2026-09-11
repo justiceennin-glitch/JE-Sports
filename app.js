@@ -1,23 +1,29 @@
-const demoPredictions=[
- {home:"Barcelona",away:"Valencia",pick:"Home Win",score:"2–1",confidence:"Medium",note:"Demo data — connect a verified football-data API for live analysis."},
- {home:"Arsenal",away:"Chelsea",pick:"Over 1.5 Goals",score:"2–1",confidence:"Medium",note:"Demo data — replace with current fixture and statistical inputs."},
- {home:"Inter",away:"Roma",pick:"Double Chance: 1X",score:"1–0",confidence:"Medium",note:"Demo data — not a guaranteed result."}
-];
-function renderPredictions(){
- const el=document.querySelector("#vipList");
- el.innerHTML=demoPredictions.map(x=>`<article class="card"><h3>${x.home} vs ${x.away}</h3><div class="pick">${x.pick}</div><span class="confidence">${x.confidence} confidence</span><p>Correct-score model: <b>${x.score}</b></p><small>${x.note}</small></article>`).join("");
- const vals={Low:45,Medium:68,High:86}; document.querySelector("#confidence").textContent="68%";
+const data={
+live:[
+{league:"Premier League",a:"Manchester United",b:"Chelsea",s:"1 - 1",m:"67'"},
+{league:"LaLiga",a:"Barcelona",b:"Atlético Madrid",s:"2 - 0",m:"54'"},
+{league:"Serie A",a:"Inter",b:"AC Milan",s:"0 - 0",m:"31'"}],
+fixtures:[
+{league:"Premier League",a:"Arsenal",b:"Liverpool",s:"Today • 18:00"},
+{league:"LaLiga",a:"Real Madrid",b:"Sevilla",s:"Today • 20:00"},
+{league:"Ghana Premier League",a:"Hearts of Oak",b:"Asante Kotoko",s:"Tomorrow • 16:00"}],
+results:[
+{league:"UEFA Champions League",a:"PSG",b:"Bayern",s:"2 - 1"},
+{league:"Premier League",a:"Manchester City",b:"Tottenham",s:"3 - 2"},
+{league:"Serie A",a:"Juventus",b:"Roma",s:"1 - 1"}],
+leagues:[
+{league:"Premier League",a:"1. Arsenal",b:"2. Liverpool",s:"—"},
+{league:"LaLiga",a:"1. Barcelona",b:"2. Real Madrid",s:"—"},
+{league:"Ghana Premier League",a:"1. Hearts of Oak",b:"2. Asante Kotoko",s:"—"}]};
+
+let tab="live";
+const content=document.querySelector("#content");
+function render(){
+ const q=document.querySelector("#search").value.toLowerCase();
+ const rows=data[tab].filter(x=>(x.a+" "+x.b+" "+x.league).toLowerCase().includes(q));
+ content.innerHTML=rows.length?rows.map(x=>`<article class="card"><div class="league">${x.league}</div><div class="match"><div class="team">${x.a}</div><div class="score">${x.s}</div><div class="team">${x.b}</div></div><div class="meta">${tab==="live"?`<span class="live">● LIVE ${x.m}</span>`:x.s}</div></article>`).join(""):`<div class="empty">No matches found.</div>`;
 }
-let scores=[
- {home:"Manchester City",away:"Liverpool",status:"Scheduled",score:"—"},
- {home:"Real Madrid",away:"Sevilla",status:"Scheduled",score:"—"},
- {home:"AC Milan",away:"Napoli",status:"Scheduled",score:"—"}
-];
-function renderScores(){
- document.querySelector("#scoreList").innerHTML=scores.map(s=>`<article class="card score"><div><h3>${s.home}</h3><h3>${s.away}</h3></div><div><span class="${s.status==='LIVE'?'live':''}">${s.status}</span><p><b>${s.score}</b></p></div></article>`).join("");
-}
-function refreshScores(){
- document.querySelector("#updated").textContent="Refreshing…";
- setTimeout(()=>{renderScores();document.querySelector("#updated").textContent="Updated "+new Date().toLocaleTimeString();},500);
-}
-renderPredictions();renderScores();
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active");tab=b.dataset.tab;render()});
+document.querySelector("#search").oninput=render;
+document.querySelector("#refresh").onclick=()=>{render();alert("Match centre refreshed. Connect a live-score API for real-time data.")};
+render();
