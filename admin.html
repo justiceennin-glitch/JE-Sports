@@ -1,36 +1,15 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#041712"><title>JE Sports — Admin</title>
-<link rel="stylesheet" href="style.css?v=4">
-</head>
-<body>
-<header class="topbar"><a class="brand" href="index.html"><span>JE</span> SPORTS</a><nav><a href="index.html">← Live site</a></nav></header>
-<main class="admin-shell">
-<section id="loginBox" class="card login"><p class="eyebrow">ADMIN</p><h1>JE Sports Admin</h1><p class="muted">Manage site settings and football analysis posts.</p>
-<label>Password<div class="pass"><input id="password" type="password" placeholder="Enter password"><button onclick="togglePass()">Show</button></div></label>
-<button class="btn primary full" onclick="login()">Login</button><p id="loginMsg" class="msg" hidden></p></section>
-
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#041712"><title>JE Sports — AI Admin</title><link rel="stylesheet" href="style.css?v=5"></head>
+<body><header class="topbar"><a class="brand" href="index.html"><span>JE</span> SPORTS</a><nav><a href="index.html">← Live site</a></nav></header>
+<main class="admin-shell"><section id="loginBox" class="card login"><p class="eyebrow">AI ADMIN</p><h1>JE Sports AI Predictions</h1><p class="muted">Generate football predictions and analysis automatically. These are informational estimates, not guarantees.</p><label>Password<div class="pass"><input id="password" type="password" placeholder="Enter password"><button onclick="togglePass()">Show</button></div></label><button class="btn primary full" onclick="login()">Login</button><p id="loginMsg" class="msg" hidden></p></section>
 <section id="dashboard" hidden>
-<div class="card"><p class="eyebrow">LIVE DATA</p><h2>Football data settings</h2>
-<p class="note">For real-time scores, use a legitimate football-data API and keep its API key private. This static site can call an API from the browser only when that provider permits it (CORS).</p>
-<label>Live matches API URL<input id="apiUrl" placeholder="https://example.com/football/live"></label>
-<label>API key (optional)<input id="apiKey" type="password" placeholder="Paste your API key"></label>
-<button class="btn primary" onclick="saveSettings()">Save settings</button>
-<p id="settingsMsg" class="msg" hidden></p></div>
-
-<div class="card"><p class="eyebrow">CONTENT</p><h2>Add football analysis</h2>
-<div class="two"><label>Home team<input id="home"></label><label>Away team<input id="away"></label></div>
-<div class="two"><label>Prediction<input id="pick" placeholder="e.g. Home win / Draw"></label><label>Confidence %<input id="confidence" type="number" min="1" max="99"></label></div>
-<label>Analysis<textarea id="analysis" placeholder="AI-generated football analysis will appear here."></textarea></label>
-<div class="ai-actions"><button class="btn ai" onclick="generateAIAnalysis()">✨ Generate AI analysis</button><span id="aiStatus" class="muted small">Uses the teams, pick and confidence to create a transparent AI-style draft.</span></div>
-<button class="btn primary" onclick="savePost()">Save analysis</button>
-<button class="btn secondary" onclick="clearPost()">Clear</button>
-</div>
-
-<div class="card"><p class="eyebrow">PUBLISHED</p><h2>Analysis posts</h2><div id="posts"></div></div>
-</section>
-</main>
-<script src="admin.js?v=4"></script>
-</body></html>
+<div class="card"><p class="eyebrow">AUTOMATIC AI</p><h2>AI Prediction Engine</h2><p class="note">Enter two teams and the engine automatically creates an estimated outcome, probability, confidence, scoreline and explanation. It uses a transparent local football-strength model; it is not a live AI model.</p>
+<div class="two"><label>Home team<input id="home" placeholder="e.g. Arsenal"></label><label>Away team<input id="away" placeholder="e.g. Chelsea"></label></div>
+<div class="two"><label>Home recent form <input id="homeForm" placeholder="Optional: W W D L W"></label><label>Away recent form <input id="awayForm" placeholder="Optional: W D W L D"></label></div>
+<div class="ai-actions"><button class="btn ai" onclick="autoPredict()">✨ Generate prediction automatically</button><span id="aiStatus" class="muted small">No manual prediction is required.</span></div>
+<div id="result" class="ai-result" hidden></div>
+<input id="pick" type="hidden"><input id="confidence" type="hidden"><label>AI analysis<textarea id="analysis" placeholder="Automatic analysis will appear here."></textarea></label>
+<button class="btn primary" onclick="savePost()">Publish analysis</button><button class="btn secondary" onclick="clearPost()">Clear</button></div>
+<div class="card"><p class="eyebrow">PUBLISHED</p><h2>AI predictions</h2><div id="posts"></div></div>
+<div class="card"><p class="eyebrow">LIVE DATA</p><h2>Football data settings</h2><p class="note">For real-time fixtures/results, connect a legitimate football-data provider. Keep API keys private and do not put secrets in public source code.</p><label>Live matches API URL<input id="apiUrl" placeholder="https://example.com/football/live"></label><label>API key (optional)<input id="apiKey" type="password" placeholder="Paste your API key"></label><button class="btn primary" onclick="saveSettings()">Save settings</button><p id="settingsMsg" class="msg" hidden></p></div>
+</section></main><script src="admin.js?v=5"></script></body></html>

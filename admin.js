@@ -1,26 +1,17 @@
-
 const PASS="JE2026";
-function login(){if(document.getElementById("password").value.trim()===PASS){sessionStorage.jeAdmin="1";document.getElementById("loginBox").hidden=true;document.getElementById("dashboard").hidden=false;loadSettings();renderPosts()}else{const m=document.getElementById("loginMsg");m.hidden=false;m.textContent="Incorrect password."}}
-function togglePass(){const x=document.getElementById("password");x.type=x.type==="password"?"text":"password"}
-function loadSettings(){document.getElementById("apiUrl").value=localStorage.getItem("jeLiveApiUrl")||"";document.getElementById("apiKey").value=localStorage.getItem("jeLiveApiKey")||""}
-function saveSettings(){localStorage.setItem("jeLiveApiUrl",document.getElementById("apiUrl").value.trim());localStorage.setItem("jeLiveApiKey",document.getElementById("apiKey").value.trim());const m=document.getElementById("settingsMsg");m.hidden=false;m.textContent="Settings saved on this browser."}
-
-function generateAIAnalysis(){
-  const h=document.getElementById("home").value.trim();
-  const a=document.getElementById("away").value.trim();
-  const pk=document.getElementById("pick").value.trim();
-  const cf=document.getElementById("confidence").value.trim();
-  const box=document.getElementById("analysis");
-  const status=document.getElementById("aiStatus");
-  if(!h||!a){status.textContent="Enter both team names first.";return}
-  const pick=pk||"the selected outcome";
-  const confidence=cf?` The current confidence level is ${cf}%, so this should be treated as an estimate rather than a certainty.`:""
-  box.value=`${h} vs ${a}: ${h} will look to use its strengths and create chances, while ${a} will aim to stay organised and respond in transition. The selected football outcome is ${pick}. Key factors to monitor are recent form, attacking efficiency, defensive consistency, home advantage and team news.${confidence}`;
-  status.textContent="AI-style analysis generated. Review it before publishing.";
-}
-
-function savePost(){const posts=JSON.parse(localStorage.getItem("jePosts")||"[]");posts.push({id:"JE-"+Date.now().toString(36).toUpperCase(),home:home.value.trim(),away:away.value.trim(),pick:pick.value.trim(),confidence:confidence.value,analysis:analysis.value.trim()});localStorage.setItem("jePosts",JSON.stringify(posts));clearPost();renderPosts()}
-function clearPost(){home.value="";away.value="";pick.value="";confidence.value="";analysis.value=""}
-function renderPosts(){const p=JSON.parse(localStorage.getItem("jePosts")||"[]");posts.innerHTML=p.slice().reverse().map(x=>`<div class="post"><button onclick="delPost('${x.id}')">Delete</button><strong>${x.home} vs ${x.away}</strong><br><span class="confidence">${x.pick} • ${x.confidence}%</span><p>${x.analysis||""}</p><small>${x.id}</small></div>`).join("")||"<p class='muted'>No analysis posts yet.</p>"}
-function delPost(id){const p=JSON.parse(localStorage.getItem("jePosts")||"[]").filter(x=>x.id!==id);localStorage.setItem("jePosts",JSON.stringify(p));renderPosts()}
-document.addEventListener("DOMContentLoaded",()=>{if(sessionStorage.jeAdmin==="1"){loginBox.hidden=true;dashboard.hidden=false;loadSettings();renderPosts()}})
+const ratings={
+  "arsenal":88,"manchester city":91,"man city":91,"liverpool":89,"chelsea":84,"manchester united":82,"man united":82,"tottenham":81,"newcastle":82,"aston villa":83,"barcelona":90,"real madrid":92,"atletico madrid":87,"atletico":87,"sevilla":80,"valencia":79,"inter":89,"inter milan":89,"ac milan":84,"juventus":84,"napoli":84,"bayern munich":91,"bayern":91,"borussia dortmund":84,"dortmund":84,"bayer leverkusen":88,"leverkusen":88,"psg":89,"paris saint-germain":89,"marseille":81,"lyon":80,"ajax":82,"psv":82,"feyenoord":80,"benfica":84,"porto":84,"sporting":83,"sporting cp":83,"galatasaray":82,"fenerbahce":81,"al ahly":80,"zamalek":76,"hearts of oak":68,"asante kotoko":69,"mamelodi sundowns":78,"orlando pirates":75,"inter miami":79,"la galaxy":74
+};
+function el(id){return document.getElementById(id)}
+function login(){if(el('password').value.trim()===PASS){sessionStorage.jeAdmin='1';el('loginBox').hidden=true;el('dashboard').hidden=false;loadSettings();renderPosts()}else{el('loginMsg').hidden=false;el('loginMsg').textContent='Incorrect password.'}}
+function togglePass(){const x=el('password');x.type=x.type==='password'?'text':'password'}
+function loadSettings(){el('apiUrl').value=localStorage.getItem('jeLiveApiUrl')||'';el('apiKey').value=localStorage.getItem('jeLiveApiKey')||''}
+function saveSettings(){localStorage.setItem('jeLiveApiUrl',el('apiUrl').value.trim());localStorage.setItem('jeLiveApiKey',el('apiKey').value.trim());el('settingsMsg').hidden=false;el('settingsMsg').textContent='Settings saved on this browser.'}
+function formScore(s){if(!s)return 0;const a=s.toUpperCase().match(/[WDL]/g)||[];let n=0;a.forEach(x=>n+=x==='W'?3:x==='D'?1:0);return a.length?((n/(a.length*3))-.5)*10:0}
+function teamRating(name){const n=name.toLowerCase().trim();if(ratings[n]!=null)return ratings[n];for(const k of Object.keys(ratings)){if(n.includes(k)||k.includes(n))return ratings[k]}return 75}
+function autoPredict(){const h=el('home').value.trim(),a=el('away').value.trim();if(!h||!a){el('aiStatus').textContent='Enter both team names first.';return}const hf=formScore(el('homeForm').value),af=formScore(el('awayForm').value);const hr=teamRating(h)+hf+3,ar=teamRating(a)+af;const diff=hr-ar;let pH=0.5+Math.max(-.30,Math.min(.30,diff*.012));let pA=0.5+Math.max(-.30,Math.min(.30,-diff*.012));let draw=1-Math.abs(pH-pA)-0.06;draw=Math.max(.12,Math.min(.30,draw));const total=pH+pA+draw;pH/=total;pA/=total;draw/=total;let outcome=pH>=pA&&pH>=draw?`${h} win`:pA>=pH&&pA>=draw?`${a} win`:'Draw';let best=Math.max(pH,pA,draw);let confidence=Math.round(55+best*35);let hs=best===pH?(diff>8?2:diff>1?2:1):best===pA?0:1;let as=best===pA?(diff<-8?2:diff<-1?1:1):best===pH?0:1;if(outcome==='Draw'){hs=1;as=1}const score=`${hs}-${as}`;const analysis=`${h} vs ${a}: the automatic model gives ${outcome} as the leading estimated outcome. ${h} receives a home-advantage adjustment, while the team-strength estimate and any recent form entered above influence the comparison. Estimated probabilities are ${Math.round(pH*100)}% home win, ${Math.round(draw*100)}% draw and ${Math.round(pA*100)}% away win. A model confidence of ${confidence}% is shown for the leading outcome. Estimated scoreline: ${score}. This is an AI-style statistical estimate, not a guarantee; injuries, line-ups, tactics and match conditions can change the result.`;el('result').hidden=false;el('result').innerHTML=`<strong>AI prediction:</strong> ${outcome}<br><span>Home ${Math.round(pH*100)}% · Draw ${Math.round(draw*100)}% · Away ${Math.round(pA*100)}%</span><br><span>Confidence: ${confidence}% · Estimated score: ${score}</span>`;el('analysis').value=analysis;el('aiStatus').textContent='Automatic prediction generated. Review it before publishing.';el('pick').value=outcome;el('confidence').value=confidence}
+function savePost(){const h=el('home').value.trim(),a=el('away').value.trim();if(!h||!a||!el('analysis').value.trim()){el('aiStatus').textContent='Generate a prediction first.';return}const posts=JSON.parse(localStorage.getItem('jePosts')||'[]');posts.push({id:'JE-'+Date.now().toString(36).toUpperCase(),home:h,away:a,pick:el('pick').value,confidence:el('confidence').value,analysis:el('analysis').value.trim()});localStorage.setItem('jePosts',JSON.stringify(posts));clearPost();renderPosts()}
+function clearPost(){['home','away','homeForm','awayForm','pick','confidence','analysis'].forEach(id=>{if(el(id))el(id).value=''});el('result').hidden=true;el('aiStatus').textContent='No manual prediction is required.'}
+function renderPosts(){const p=JSON.parse(localStorage.getItem('jePosts')||'[]');el('posts').innerHTML=p.slice().reverse().map(x=>`<div class="post"><button onclick="delPost('${x.id}')">Delete</button><strong>${x.home} vs ${x.away}</strong><br><span class="confidence">${x.pick} • ${x.confidence}%</span><p>${x.analysis||''}</p><small>${x.id}</small></div>`).join('')||"<p class='muted'>No AI predictions yet.</p>"}
+function delPost(id){const p=JSON.parse(localStorage.getItem('jePosts')||'[]').filter(x=>x.id!==id);localStorage.setItem('jePosts',JSON.stringify(p));renderPosts()}
+document.addEventListener('DOMContentLoaded',()=>{if(sessionStorage.jeAdmin==='1'){el('loginBox').hidden=true;el('dashboard').hidden=false;loadSettings();renderPosts()}})
