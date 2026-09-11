@@ -1,11 +1,62 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>JE Sports — Live Football</title><link rel="stylesheet" href="style.css"></head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JE Sports</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4fff7;color:#12351f}
+header{background:linear-gradient(135deg,#087f3e,#16a85a);color:white;padding:22px 18px;border-radius:0 0 24px 24px}
+.top{display:flex;justify-content:space-between;align-items:center}.logo{font-size:27px;font-weight:800}.badge{background:#fff;color:#087f3e;padding:8px 12px;border-radius:20px;font-weight:700}
+.hero{padding:28px 4px 20px}.hero h1{font-size:34px;margin:0 0 10px}.hero p{margin:0;opacity:.9}
+nav{display:flex;gap:8px;overflow:auto;padding:12px 0}.navbtn{border:0;background:#fff;color:#087f3e;padding:11px 15px;border-radius:14px;font-weight:700;white-space:nowrap}
+main{padding:18px;max-width:900px;margin:auto}.section-title{display:flex;justify-content:space-between;align-items:center;margin:10px 0}.section-title h2{font-size:21px}.card{background:white;border-radius:18px;padding:17px;margin:12px 0;box-shadow:0 5px 20px #087f3e18;border:1px solid #d8f1e1}
+.match{display:flex;align-items:center;justify-content:space-between;gap:10px}.team{text-align:center;flex:1;font-weight:700}.vs{font-weight:800;color:#087f3e}.time{font-size:12px;color:#678}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.feature{background:#087f3e;color:white;padding:18px;border-radius:18px}.feature h3{margin:0 0 7px}.feature p{margin:0;font-size:14px;opacity:.9}
+.pred{border-left:5px solid #16a85a}.pick{font-weight:800;color:#087f3e}.vip{background:linear-gradient(135deg,#064d29,#0a9b4d);color:white}.button{display:inline-block;margin-top:12px;background:white;color:#087f3e;padding:10px 15px;border-radius:12px;text-decoration:none;font-weight:800}
+footer{text-align:center;padding:28px 18px;color:#64816d}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.hero h1{font-size:29px}}
+</style>
+</head>
 <body>
-<header><div class="logo">JE <span>SPORTS</span></div><button id="refresh">↻ Refresh</button></header>
-<nav><button class="active" data-tab="live">🔴 Live</button><button data-tab="fixtures">📅 Fixtures</button><button data-tab="results">✅ Results</button><button data-tab="leagues">🏆 Leagues</button></nav>
-<main><section class="hero"><h1>Live Football Centre</h1><p>Scores, fixtures, results, tables and match statistics.</p>
-<input id="search" placeholder="Search team or competition…"></section>
-<div id="content"></div></main>
-<footer>JE Sports • Football information only • No betting or bookmaker services</footer>
-<script src="app.js"></script></body></html>
+<header>
+  <div class="top"><div class="logo">⚽ JE SPORTS</div><div class="badge">LIVE</div></div>
+  <div class="hero"><h1>Football starts here.</h1><p>Matches, analysis and predictions in one simple place.</p></div>
+  <nav>
+    <button class="navbtn" onclick="scrollToId('home')">Home</button>
+    <button class="navbtn" onclick="scrollToId('matches')">Matches</button>
+    <button class="navbtn" onclick="scrollToId('predictions')">Predictions</button>
+    <button class="navbtn" onclick="scrollToId('vip')">VIP</button>
+  </nav>
+</header>
+
+<main id="home">
+  <div class="section-title"><h2>Today's highlights</h2><span>⚡</span></div>
+  <div class="grid">
+    <div class="feature"><h3>Live Matches</h3><p>Follow your favourite football games.</p></div>
+    <div class="feature"><h3>AI Analysis</h3><p>Get an easy-to-read match analysis.</p></div>
+  </div>
+
+  <section id="matches">
+    <div class="section-title"><h2>Upcoming Matches</h2></div>
+    <div class="card"><div class="match"><div class="team">Team A</div><div><div class="vs">VS</div><div class="time">Today · 18:00</div></div><div class="team">Team B</div></div></div>
+    <div class="card"><div class="match"><div class="team">Team C</div><div><div class="vs">VS</div><div class="time">Today · 20:30</div></div><div class="team">Team D</div></div></div>
+  </section>
+
+  <section id="predictions">
+    <div class="section-title"><h2>Match Analysis</h2></div>
+    <div class="card pred"><b>Team A vs Team B</b><p>Sample analysis: compare recent form, goals and home/away performance before making a decision.</p><span class="pick">Sample pick: Over 1.5 goals</span></div>
+    <div class="card pred"><b>Team C vs Team D</b><p>Sample analysis: review injuries, lineups and recent results before making a decision.</p><span class="pick">Sample pick: Double chance</span></div>
+  </section>
+
+  <section id="vip">
+    <div class="section-title"><h2>VIP Predictions</h2></div>
+    <div class="card vip"><h3>👑 JE Sports VIP</h3><p>Premium-style prediction area. Connect your own legitimate data/API before publishing real match tips.</p><a class="button" href="#" onclick="alert('VIP section ready — connect your own service to activate it.');return false;">Open VIP</a></div>
+  </section>
+</main>
+<footer>© 2026 JE Sports · Green Football Hub</footer>
+<script>
+function scrollToId(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});}
+</script>
+</body>
+</html>
