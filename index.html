@@ -1,1 +1,59 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JE Sports</title><link rel="stylesheet" href="style.css?v=3"></head><body><header class="topbar"><div class="brand"><span>JE</span> SPORTS</div><nav id="nav"><a href="index.html">Home</a> <a href="#predictions">Predictions</a> <a href="admin.html">Admin</a></nav><button class="menu" onclick="toggleMenu()">☰</button></header><main><section class="hero"><div><p class="eyebrow">⚽ FOOTBALL • ANALYSIS • PICKS</p><h1>Smart football <strong>predictions.</strong></h1><p class="hero-text">Football match analysis and predictions in one place.</p><div class="hero-buttons"><a class="btn primary" href="#predictions">View predictions</a><a class="btn ghost" href="admin.html">Admin</a></div></div><div class="hero-ball">⚽</div></section><div class="ticker"><span>🔥 FOOTBALL TODAY</span><span>Predictions are analysis, not guaranteed results.</span></div><section id="predictions" class="section"><div class="section-head"><div><p class="eyebrow">FEATURED</p><h2>Football predictions</h2></div><span id="today"></span></div><div class="cards" id="predictionCards"></div><p id="emptyPredictions" class="empty">No predictions have been published yet.</p></section></main><footer><div class="brand"><span>JE</span> SPORTS</div><p>Football predictions & match analysis.</p></footer><script src="script.js?v=3"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#041712">
+<title>JE Sports — Live Football</title>
+<link rel="stylesheet" href="style.css?v=4">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html"><span>JE</span> SPORTS</a>
+  <nav><a class="active" href="index.html">Live</a><a href="#ai">AI Prediction</a><a href="#teams">Teams</a><a href="admin.html">Admin</a></nav>
+  <button class="menu" onclick="document.querySelector('nav').classList.toggle('open')">☰</button>
+</header>
+
+<main>
+<section class="hero">
+  <div><p class="eyebrow">⚽ LIVE FOOTBALL CENTER</p>
+  <h1>Live matches & <strong>smart analysis</strong></h1>
+  <p>Follow match status, explore teams, and generate an AI-style football analysis from the information available on your site.</p>
+  <div class="hero-actions"><a class="btn primary" href="#live">See live matches</a><a class="btn ghost" href="#ai">AI prediction</a></div></div>
+  <div class="hero-icon">⚽</div>
+</section>
+
+<section id="live" class="section">
+  <div class="section-head"><div><p class="eyebrow">LIVE CENTER</p><h2>Live & upcoming matches</h2></div><button class="refresh" onclick="loadMatches()">↻ Refresh</button></div>
+  <p id="liveStatus" class="muted">Loading football matches…</p>
+  <div id="matches" class="match-grid"></div>
+</section>
+
+<section id="ai" class="section">
+  <div class="section-head"><div><p class="eyebrow">AI ANALYSIS</p><h2>AI football prediction</h2></div></div>
+  <div class="ai-card">
+    <p class="muted">Enter the two teams and recent form. The built-in analyzer gives a transparent estimate; it does not guarantee a result.</p>
+    <div class="two">
+      <div><label>Home team<input id="home" placeholder="e.g. Arsenal"></label></div>
+      <div><label>Away team<input id="away" placeholder="e.g. Chelsea"></label></div>
+    </div>
+    <div class="two">
+      <label>Home recent form<input id="homeForm" placeholder="e.g. W W D W L"></label>
+      <label>Away recent form<input id="awayForm" placeholder="e.g. W D L W D"></label>
+    </div>
+    <button class="btn primary full" onclick="predict()">Generate AI analysis</button>
+    <div id="predictionResult" class="prediction-result" hidden></div>
+  </div>
+</section>
+
+<section id="teams" class="section">
+  <div class="section-head"><div><p class="eyebrow">TEAM DIRECTORY</p><h2>Football teams</h2></div></div>
+  <input id="teamSearch" class="search" placeholder="Search teams, e.g. Barcelona" oninput="renderTeams()">
+  <div id="teamsGrid" class="team-grid"></div>
+  <p class="muted small">The starter directory includes major clubs. For a complete worldwide team database, connect a football-data provider in the admin settings.</p>
+</section>
+</main>
+
+<footer><div class="brand"><span>JE</span> SPORTS</div><p>Live football • analysis • team directory</p></footer>
+<script src="script.js?v=4"></script>
+</body></html>
