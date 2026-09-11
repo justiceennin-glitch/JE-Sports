@@ -20,3 +20,7 @@ A static list cannot reliably represent every team worldwide. The package includ
 This version does NOT create or provide betting/wagering booking codes. Prediction IDs are content IDs only. Do not use predictions as guaranteed betting outcomes.
 
 Demo admin password: JE2026
+
+
+## AI-style analysis
+The Admin page now has a “Generate AI analysis” button. It creates a transparent local draft from the two team names, selected prediction and confidence. It is not a live AI model and does not claim access to real-time form, injuries, or odds. Review the draft before publishing.

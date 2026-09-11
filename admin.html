@@ -23,7 +23,8 @@
 <div class="card"><p class="eyebrow">CONTENT</p><h2>Add football analysis</h2>
 <div class="two"><label>Home team<input id="home"></label><label>Away team<input id="away"></label></div>
 <div class="two"><label>Prediction<input id="pick" placeholder="e.g. Home win / Draw"></label><label>Confidence %<input id="confidence" type="number" min="1" max="99"></label></div>
-<label>Analysis<textarea id="analysis" placeholder="Explain the football factors behind the prediction."></textarea></label>
+<label>Analysis<textarea id="analysis" placeholder="AI-generated football analysis will appear here."></textarea></label>
+<div class="ai-actions"><button class="btn ai" onclick="generateAIAnalysis()">✨ Generate AI analysis</button><span id="aiStatus" class="muted small">Uses the teams, pick and confidence to create a transparent AI-style draft.</span></div>
 <button class="btn primary" onclick="savePost()">Save analysis</button>
 <button class="btn secondary" onclick="clearPost()">Clear</button>
 </div>
