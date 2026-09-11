@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="JE Sports — football predictions, match analysis and booking codes.">
+<title>JE Sports | Football Predictions</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span>JE</span> SPORTS</div>
+  <nav>
+    <a href="#home">Home</a><a href="#predictions">Predictions</a><a href="#codes">Booking Codes</a>
+    <a href="#leagues">Leagues</a><a href="#news">News</a>
+  </nav>
+  <button class="menu" onclick="toggleMenu()">☰</button>
+</header>
+
+<main id="home">
+<section class="hero">
+  <div>
+    <p class="eyebrow">⚽ FOOTBALL • ANALYSIS • PICKS</p>
+    <h1>Smart football<br><strong>predictions.</strong></h1>
+    <p class="hero-text">Match analysis, today's picks and booking codes — all in one place.</p>
+    <div class="hero-buttons"><a class="btn primary" href="#predictions">View Predictions</a><a class="btn ghost" href="#codes">Booking Codes</a></div>
+  </div>
+  <div class="hero-ball">⚽</div>
+</section>
+
+<section class="ticker"><span>🔥 TODAY'S FOOTBALL</span><span>Predictions are analysis, not guaranteed results.</span></section>
+
+<section id="predictions" class="section">
+  <div class="section-head"><div><p class="eyebrow">TODAY'S PICKS</p><h2>Featured predictions</h2></div><span class="date" id="today"></span></div>
+  <div class="cards">
+    <article class="match-card">
+      <div class="league">🏆 Premier League</div><div class="teams"><b>Arsenal</b><span>VS</span><b>Newcastle</b></div>
+      <div class="pick"><small>JE PICK</small><strong>Arsenal or Draw</strong><em>Confidence: 78%</em></div>
+      <div class="markets"><span>1X</span><span>Over 1.5</span><span>BTTS</span></div>
+    </article>
+    <article class="match-card">
+      <div class="league">🌍 La Liga</div><div class="teams"><b>Barcelona</b><span>VS</span><b>Sevilla</b></div>
+      <div class="pick"><small>JE PICK</small><strong>Barcelona Win</strong><em>Confidence: 81%</em></div>
+      <div class="markets"><span>1</span><span>Over 1.5</span><span>Home Goals</span></div>
+    </article>
+    <article class="match-card">
+      <div class="league">⭐ Champions League</div><div class="teams"><b>Inter</b><span>VS</span><b>PSG</b></div>
+      <div class="pick"><small>JE PICK</small><strong>Over 1.5 Goals</strong><em>Confidence: 72%</em></div>
+      <div class="markets"><span>O1.5</span><span>BTTS</span><span>Goals</span></div>
+    </article>
+  </div>
+</section>
+
+<section id="codes" class="section dark">
+  <div class="section-head"><div><p class="eyebrow">BOOKING CODES</p><h2>Today's slips</h2></div></div>
+  <div class="code-grid">
+    <div class="code-card"><span>🔥 DAILY ACCUMULATOR</span><strong>JE7X9K2</strong><button onclick="copyCode('JE7X9K2')">Copy Code</button></div>
+    <div class="code-card"><span>⚡ GOALS PICK</span><strong>JEG4M8P</strong><button onclick="copyCode('JEG4M8P')">Copy Code</button></div>
+  </div>
+  <p class="note">Booking codes are provided for convenience. Check all selections before using them.</p>
+</section>
+
+<section id="leagues" class="section">
+  <p class="eyebrow">COMPETITIONS</p><h2>Popular leagues</h2>
+  <div class="league-grid"><div>🇬🇧 Premier League</div><div>🇪🇸 La Liga</div><div>🇮🇹 Serie A</div><div>🇩🇪 Bundesliga</div><div>🇫🇷 Ligue 1</div><div>⭐ Champions League</div></div>
+</section>
+
+<section id="news" class="section">
+  <p class="eyebrow">LATEST</p><h2>Match analysis</h2>
+  <div class="news-grid"><article><span>ANALYSIS</span><h3>How to read football form before a match</h3><p>Look at recent results, home/away performance, goals and team news before making a prediction.</p></article>
+  <article><span>TIPS</span><h3>Why no prediction is guaranteed</h3><p>Football is unpredictable. Use statistics as information and make responsible decisions.</p></article></div>
+</section>
+</main>
+
+<footer><div class="brand"><span>JE</span> SPORTS</div><p>Football predictions & match analysis.</p><small>© 2026 JE Sports. For information and entertainment. No guaranteed results.</small></footer>
+<script src="script.js"></script>
+</body>
+</html>
