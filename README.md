@@ -1,25 +1,24 @@
-# JE Sports — mobile sports app feature demo
+# World Football Teams ZIP
 
-This ZIP contains a responsive web app inspired by the feature layout in the supplied screenshot.
+This package provides a football-team database structure for a website/app.
 
-Included:
-- Home dashboard
-- Soccer / Today / Odds Filter / Virtual / Booking Codes / All shortcuts
-- Featured matches and league tabs
-- Live matches screen
-- Sports screen with football markets
-- Bet slip with selections and total odds
-- Booking-code demo
-- Odds filtering
-- Games lobby
-- Virtual sports demo
-- Jackpot screen
-- Mobile bottom navigation
+Files:
+- teams.json — machine-readable team data
+- teams.csv — spreadsheet-friendly team list
+- README.md — notes
 
 Important:
-This is a FRONT-END DEMO. It does not provide real betting, real-money transactions, guaranteed predictions, live feeds, or bookmaker access. To make live scores/odds work, connect a legitimate sports-data API. To make payments or real betting work, use a properly licensed provider and comply with local laws.
+This is a starter dataset, not literally every registered football club in the world.
+A truly complete worldwide database would require a live/regularly updated football-data source.
+The empty logo_url and league fields are intentional so your app can connect them to an API later.
 
-Run:
-1. Extract the ZIP.
-2. Open index.html in a browser.
-3. For deployment, upload the folder to a static host such as Netlify, Vercel, GitHub Pages, or your own hosting.
+Suggested app features:
+- Search teams
+- Filter by country
+- Filter by league
+- Team profile pages
+- Fixtures/results
+- Live scores
+- Standings
+- Team logos/crests
+- Automatic API updates
