@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>JE Sports | Admin</title><link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar"><div class="brand"><span>JE</span> SPORTS</div><nav><a href="index.html">Public Site</a></nav></header>
+<main class="admin-shell">
+<section id="loginBox" class="admin-card login">
+<h2>🔐 JE Sports Admin</h2>
+<p class="muted">Demo admin panel for managing football predictions. This login is suitable for a static GitHub Pages demo, not sensitive production data.</p>
+<div class="field" style="margin-top:16px"><label>Admin password</label><input id="password" type="password" placeholder="Enter password"></div>
+<div class="actions"><button class="button save" onclick="login()">Login</button></div>
+<p id="loginStatus" class="muted"></p>
+</section>
+
+<section id="dashboard" hidden>
+<div class="admin-card">
+<h2>Prediction Manager</h2>
+<p class="muted">Add predictions that will appear on the public JE Sports page in this same browser.</p>
+<form id="predictionForm">
+<input id="editId" type="hidden">
+<div class="form-grid">
+<div class="field"><label>League</label><select id="league"><option>Premier League</option><option>La Liga</option><option>Serie A</option><option>Bundesliga</option><option>Ligue 1</option><option>Champions League</option><option>Other</option></select></div>
+<div class="field"><label>Confidence (%)</label><input id="confidence" type="number" min="1" max="99" required></div>
+<div class="field"><label>Home team</label><input id="home" required></div>
+<div class="field"><label>Away team</label><input id="away" required></div>
+<div class="field"><label>Prediction</label><input id="pick" placeholder="Example: Home win" required></div>
+<div class="field"><label>Markets / tags</label><input id="markets" placeholder="Example: 1, Over 1.5, BTTS"></div>
+<div class="field full"><label>Match analysis</label><textarea id="analysis" placeholder="Short explanation for your prediction"></textarea></div>
+</div>
+<div class="actions"><button class="button save" type="submit">Save prediction</button><button class="button secondary" type="button" onclick="resetForm()">Clear</button><button class="button secondary" type="button" onclick="logout()">Logout</button></div>
+<p id="saveStatus" class="status" hidden></p>
+</form>
+</div>
+
+<div class="admin-card">
+<h2>Published predictions</h2>
+<div class="table-wrap"><table class="admin-table"><thead><tr><th>Match</th><th>Pick</th><th>Confidence</th><th>ID</th><th>Actions</th></tr></thead><tbody id="predictionTable"></tbody></table></div>
+</div>
+
+<div class="admin-card">
+<h2>🆔 Prediction IDs</h2>
+<p class="muted">These are internal/content IDs for sharing an analysis post. They are not betting or wagering codes.</p>
+</div>
+</section>
+</main>
+<script src="admin.js"></script>
+</body>
+</html>

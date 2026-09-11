@@ -1,17 +1,16 @@
-# JE Sports
+# JE Sports — Admin Edition
 
-A mobile-friendly football predictions website starter.
+This version adds `admin.html` for managing football predictions.
 
-## Included
-- Home page
-- Football prediction cards
-- Booking-code section with copy buttons
-- Popular leagues
-- Match-analysis articles
-- Responsive mobile design
+## Admin demo
+- Open `admin.html`
+- Demo password: `JE2026`
+- Add, edit and delete predictions.
+- The public `index.html` reads the saved predictions.
 
-## Important
-The sample predictions and booking codes are placeholders. Replace them with your own verified/current information before publishing.
+## Important limitation
+This is a static GitHub Pages demo. Data is stored in the browser's localStorage, so changes are visible on the same browser/device but are **not automatically shared with every visitor**.
 
-## Publish
-Upload the contents of this folder to a static hosting service such as GitHub Pages, Netlify, Vercel, or Cloudflare Pages.
+For a real multi-user admin system, a secure backend/database and server-side authentication are required.
+
+This edition intentionally uses **Prediction IDs**, not gambling/booking codes.
