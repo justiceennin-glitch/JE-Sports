@@ -1,5 +1,15 @@
-JE SPORTS WEBSITE
-=================
-Green mobile-friendly JE Sports homepage using the supplied JE Sports logo.
+BET SLIP FEATURE
 
-The match cards are sample content. Connect an appropriate licensed sports-data/API service before presenting live scores, odds, booking codes, or predictions as real-time data.
+Files:
+- index.html  Main page
+- style.css   Design and responsive layout
+- script.js   Demo bet popup and buttons
+
+UPLOAD:
+1. Extract this ZIP.
+2. Upload the three files to the same folder on your website.
+3. Open index.html or integrate its HTML/CSS/JS into your existing site.
+
+IMPORTANT:
+This is a front-end demo only. It does not process real bets or payments.
+For real transactions, connect the Place Bet action to your authorized backend/API.
