@@ -1,51 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>JE Sports | Admin</title><link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#041712">
+<title>JE Sports | Admin</title>
+<link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
-<header class="topbar"><div class="brand"><span>JE</span> SPORTS</div><nav><a href="index.html">Public Site</a></nav></header>
+<header class="topbar">
+  <div class="brand"><span>JE</span> SPORTS</div>
+  <nav><a href="index.html">← Public site</a></nav>
+</header>
+
 <main class="admin-shell">
-<section id="loginBox" class="admin-card login">
-<h2>🔐 JE Sports Admin</h2>
-<p class="muted">Demo admin panel for managing football predictions. This login is suitable for a static GitHub Pages demo, not sensitive production data.</p>
-<div class="field" style="margin-top:16px"><label>Admin password</label><input id="password" type="password" placeholder="Enter password"></div>
-<div class="actions"><button class="button save" onclick="login()">Login</button></div>
-<p id="loginStatus" class="muted"></p>
-</section>
+  <section id="loginBox" class="admin-card login">
+    <p class="eyebrow">SECURE AREA</p>
+    <h2>JE Sports Admin</h2>
+    <p class="muted">Manage your football analysis and prediction posts from your phone.</p>
+    <div class="field">
+      <label for="password">Admin password</label>
+      <div class="password-row">
+        <input id="password" type="password" placeholder="Enter password" autocomplete="off">
+        <button class="icon-btn" type="button" id="togglePassword" aria-label="Show password">Show</button>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="button save" type="button" id="loginButton">Login</button>
+    </div>
+    <p id="loginStatus" class="status hidden"></p>
+  </section>
 
-<section id="dashboard" hidden>
-<div class="admin-card">
-<h2>Prediction Manager</h2>
-<p class="muted">Add predictions that will appear on the public JE Sports page in this same browser.</p>
-<form id="predictionForm">
-<input id="editId" type="hidden">
-<div class="form-grid">
-<div class="field"><label>League</label><select id="league"><option>Premier League</option><option>La Liga</option><option>Serie A</option><option>Bundesliga</option><option>Ligue 1</option><option>Champions League</option><option>Other</option></select></div>
-<div class="field"><label>Confidence (%)</label><input id="confidence" type="number" min="1" max="99" required></div>
-<div class="field"><label>Home team</label><input id="home" required></div>
-<div class="field"><label>Away team</label><input id="away" required></div>
-<div class="field"><label>Prediction</label><input id="pick" placeholder="Example: Home win" required></div>
-<div class="field"><label>Markets / tags</label><input id="markets" placeholder="Example: 1, Over 1.5, BTTS"></div>
-<div class="field full"><label>Match analysis</label><textarea id="analysis" placeholder="Short explanation for your prediction"></textarea></div>
-</div>
-<div class="actions"><button class="button save" type="submit">Save prediction</button><button class="button secondary" type="button" onclick="resetForm()">Clear</button><button class="button secondary" type="button" onclick="logout()">Logout</button></div>
-<p id="saveStatus" class="status" hidden></p>
-</form>
-</div>
+  <section id="dashboard" hidden>
+    <div class="admin-card">
+      <div class="section-title">
+        <div>
+          <p class="eyebrow">DASHBOARD</p>
+          <h2 id="formTitle">Add prediction</h2>
+          <p class="muted">Fill in the match details, then tap Save prediction.</p>
+        </div>
+      </div>
 
-<div class="admin-card">
-<h2>Published predictions</h2>
-<div class="table-wrap"><table class="admin-table"><thead><tr><th>Match</th><th>Pick</th><th>Confidence</th><th>ID</th><th>Actions</th></tr></thead><tbody id="predictionTable"></tbody></table></div>
-</div>
+      <div class="stats">
+        <div class="stat"><strong id="totalCount">0</strong><span>Total posts</span></div>
+        <div class="stat"><strong id="leagueCount">0</strong><span>Leagues</span></div>
+        <div class="stat"><strong id="avgConfidence">0%</strong><span>Avg. confidence</span></div>
+      </div>
 
-<div class="admin-card">
-<h2>🆔 Prediction IDs</h2>
-<p class="muted">These are internal/content IDs for sharing an analysis post. They are not betting or wagering codes.</p>
-</div>
-</section>
+      <form id="predictionForm">
+        <input id="editId" type="hidden">
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="league">League</label>
+            <select id="league">
+              <option>Premier League</option><option>La Liga</option><option>Serie A</option>
+              <option>Bundesliga</option><option>Ligue 1</option><option>Champions League</option><option>Other</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="confidence">Confidence (%)</label>
+            <input id="confidence" type="number" min="1" max="99" inputmode="numeric" placeholder="e.g. 78" required>
+          </div>
+
+          <div class="field">
+            <label for="home">Home team</label>
+            <input id="home" autocomplete="off" placeholder="e.g. Arsenal" required>
+          </div>
+
+          <div class="field">
+            <label for="away">Away team</label>
+            <input id="away" autocomplete="off" placeholder="e.g. Newcastle" required>
+          </div>
+
+          <div class="field">
+            <label for="pick">Prediction</label>
+            <input id="pick" autocomplete="off" placeholder="e.g. Home win" required>
+          </div>
+
+          <div class="field">
+            <label for="markets">Markets / tags</label>
+            <input id="markets" autocomplete="off" placeholder="e.g. Match result, goals">
+          </div>
+
+          <div class="field full">
+            <label for="analysis">Match analysis</label>
+            <textarea id="analysis" placeholder="Write a short reason for your football prediction..."></textarea>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="button save" id="saveButton" type="submit">Save prediction</button>
+          <button class="button secondary" type="button" id="clearButton">Clear</button>
+          <button class="button secondary" type="button" id="logoutButton">Logout</button>
+        </div>
+        <p id="saveStatus" class="status hidden"></p>
+      </form>
+    </div>
+
+    <div class="admin-card">
+      <div class="section-title">
+        <div>
+          <p class="eyebrow">CONTENT</p>
+          <h2>Published predictions</h2>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="admin-table">
+          <thead><tr><th>Match</th><th>Pick</th><th>Confidence</th><th>ID</th><th>Actions</th></tr></thead>
+          <tbody id="predictionTable"></tbody>
+        </table>
+      </div>
+      <p id="emptyPredictions" class="empty hidden">No predictions yet. Add your first one above.</p>
+    </div>
+
+    <div class="admin-card">
+      <p class="eyebrow">IMPORTANT</p>
+      <h2>Prediction IDs</h2>
+      <p class="note">Prediction IDs are content IDs for sharing your football analysis posts. They are not betting or wagering codes.</p>
+      <p class="muted" style="margin-top:12px">This GitHub Pages version stores data in the browser, so changes are local to this device/browser. A real multi-user admin system needs a secure backend.</p>
+    </div>
+  </section>
 </main>
-<script src="admin.js"></script>
+<script src="admin.js?v=3"></script>
 </body>
 </html>

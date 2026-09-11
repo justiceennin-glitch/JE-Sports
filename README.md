@@ -1,16 +1,20 @@
-# JE Sports — Admin Edition
+# JE Sports — Professional Mobile Admin
 
-This version adds `admin.html` for managing football predictions.
+Open `admin.html` to manage football analysis/prediction posts.
 
-## Admin demo
-- Open `admin.html`
-- Demo password: `JE2026`
-- Add, edit and delete predictions.
-- The public `index.html` reads the saved predictions.
+Demo password: `JE2026`
 
-## Important limitation
-This is a static GitHub Pages demo. Data is stored in the browser's localStorage, so changes are visible on the same browser/device but are **not automatically shared with every visitor**.
+## Mobile improvements
+- Phone-first responsive layout
+- Large tap-friendly controls
+- Show/Hide password button
+- Quick dashboard statistics
+- Mobile prediction cards instead of a wide table
+- Edit/Delete buttons sized for touch
+- Sticky header and clearer sections
+- Cache-busting version on CSS/JS
 
-For a real multi-user admin system, a secure backend/database and server-side authentication are required.
+## Important
+This is a static GitHub Pages demo. Data is stored in the browser's localStorage, so it is not a secure shared multi-user admin system. A production admin should use server-side authentication and a database.
 
-This edition intentionally uses **Prediction IDs**, not gambling/booking codes.
+Prediction IDs are content IDs only; this version does not provide betting or wagering codes.

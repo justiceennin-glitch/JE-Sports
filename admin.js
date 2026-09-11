@@ -1,30 +1,160 @@
-const ADMIN_PASSWORD="JE2026";
-function getData(){try{return JSON.parse(localStorage.getItem("jeSportsPredictions")||"[]")}catch(e){return[]}}
-function setData(d){localStorage.setItem("jeSportsPredictions",JSON.stringify(d))}
+
+const ADMIN_PASSWORD = "JE2026";
+const KEY = "jeSportsPredictions";
+
+const $ = (id) => document.getElementById(id);
+
+function getData(){
+  try { return JSON.parse(localStorage.getItem(KEY) || "[]"); }
+  catch(e){ return []; }
+}
+function setData(data){ localStorage.setItem(KEY, JSON.stringify(data)); }
+
+function showStatus(id, message, good=true){
+  const el = $(id);
+  el.textContent = message;
+  el.classList.remove("hidden");
+  el.style.background = good ? "#e5f3ee" : "#fff1f0";
+  el.style.color = good ? "#0a684d" : "#b42318";
+}
+function hideStatus(id){ $(id).classList.add("hidden"); }
+
 function login(){
- const pass=document.getElementById("password").value;
- if(pass===ADMIN_PASSWORD){
-  sessionStorage.setItem("jeAdmin","1");showDashboard();
- }else document.getElementById("loginStatus").textContent="Incorrect password.";
+  const pass = $("password").value.trim();
+  if(pass === ADMIN_PASSWORD){
+    sessionStorage.setItem("jeAdmin","1");
+    $("loginBox").hidden = true;
+    $("dashboard").hidden = false;
+    hideStatus("loginStatus");
+    renderTable();
+    $("home")?.focus();
+  } else {
+    showStatus("loginStatus","Incorrect password. Check the password and try again.",false);
+  }
 }
-function logout(){sessionStorage.removeItem("jeAdmin");location.reload()}
-function showDashboard(){document.getElementById("loginBox").hidden=true;document.getElementById("dashboard").hidden=false;renderTable()}
-function uid(){return "JE-"+Date.now().toString(36).toUpperCase()}
-function escapeHtml(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function logout(){
+  sessionStorage.removeItem("jeAdmin");
+  location.reload();
+}
+function uid(){
+  return "JE-" + Date.now().toString(36).toUpperCase();
+}
+function resetForm(){
+  $("predictionForm").reset();
+  $("editId").value = "";
+  $("formTitle").textContent = "Add prediction";
+  $("saveButton").textContent = "Save prediction";
+  hideStatus("saveStatus");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function escapeHtml(value){
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  }[c]));
+}
 function renderTable(){
- const body=document.getElementById("predictionTable"), data=getData();
- body.innerHTML=data.length?data.map(p=>`<tr><td>${escapeHtml(p.home)} vs ${escapeHtml(p.away)}</td><td>${escapeHtml(p.pick)}</td><td>${escapeHtml(p.confidence)}%</td><td><span class="id-badge">${escapeHtml(p.id)}</span></td><td><button class="button secondary" onclick="editPrediction('${p.id}')">Edit</button><button class="button danger" onclick="deletePrediction('${p.id}')">Delete</button></td></tr>`).join(""):`<tr><td colspan="5">No predictions yet.</td></tr>`;
+  const data = getData();
+  const tbody = $("predictionTable");
+  tbody.innerHTML = "";
+  data.slice().reverse().forEach(item => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td data-label="Match"><div class="match-name">${escapeHtml(item.home)} vs ${escapeHtml(item.away)}</div><small>${escapeHtml(item.league)}</small></td>
+      <td data-label="Pick"><span class="pick">${escapeHtml(item.pick)}</span></td>
+      <td data-label="Confidence"><span class="confidence">${escapeHtml(item.confidence)}%</span></td>
+      <td data-label="ID"><span class="id-pill">${escapeHtml(item.id)}</span></td>
+      <td data-label="Actions">
+        <div class="row-actions">
+          <button class="small-btn secondary" type="button" onclick="editPrediction('${item.id}')">Edit</button>
+          <button class="small-btn danger" type="button" onclick="deletePrediction('${item.id}')">Delete</button>
+        </div>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+
+  $("emptyPredictions").classList.toggle("hidden", data.length !== 0);
+  $("totalCount").textContent = data.length;
+  $("leagueCount").textContent = new Set(data.map(x => x.league).filter(Boolean)).size;
+  const avg = data.length ? Math.round(data.reduce((sum,x)=>sum + Number(x.confidence||0),0)/data.length) : 0;
+  $("avgConfidence").textContent = avg + "%";
 }
-function resetForm(){document.getElementById("predictionForm").reset();document.getElementById("editId").value=""}
-document.getElementById("predictionForm").addEventListener("submit",e=>{
- e.preventDefault();
- const data=getData(), edit=document.getElementById("editId").value;
- const item={id:edit||uid(),league:document.getElementById("league").value,confidence:document.getElementById("confidence").value,home:document.getElementById("home").value,away:document.getElementById("away").value,pick:document.getElementById("pick").value,markets:document.getElementById("markets").value.split(",").map(x=>x.trim()).filter(Boolean),analysis:document.getElementById("analysis").value};
- if(edit){const i=data.findIndex(x=>x.id===edit);if(i>=0)data[i]=item}else data.unshift(item);
- setData(data);resetForm();renderTable();
- const s=document.getElementById("saveStatus");s.hidden=false;s.textContent="Prediction saved successfully.";
- setTimeout(()=>s.hidden=true,2500);
+function editPrediction(id){
+  const item = getData().find(x => x.id === id);
+  if(!item) return;
+  $("editId").value = item.id;
+  $("league").value = item.league || "Other";
+  $("confidence").value = item.confidence || "";
+  $("home").value = item.home || "";
+  $("away").value = item.away || "";
+  $("pick").value = item.pick || "";
+  $("markets").value = item.markets || "";
+  $("analysis").value = item.analysis || "";
+  $("formTitle").textContent = "Edit prediction";
+  $("saveButton").textContent = "Update prediction";
+  hideStatus("saveStatus");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function deletePrediction(id){
+  const data = getData();
+  const item = data.find(x => x.id === id);
+  if(!item) return;
+  if(!confirm(`Delete "${item.home} vs ${item.away}"?`)) return;
+  setData(data.filter(x => x.id !== id));
+  renderTable();
+  showStatus("saveStatus","Prediction deleted.");
+}
+
+$("predictionForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const confidence = Number($("confidence").value);
+  if(confidence < 1 || confidence > 99){
+    showStatus("saveStatus","Confidence must be between 1 and 99.",false);
+    return;
+  }
+
+  const data = getData();
+  const existingId = $("editId").value;
+  const item = {
+    id: existingId || uid(),
+    league: $("league").value,
+    confidence,
+    home: $("home").value.trim(),
+    away: $("away").value.trim(),
+    pick: $("pick").value.trim(),
+    markets: $("markets").value.trim(),
+    analysis: $("analysis").value.trim()
+  };
+
+  if(existingId){
+    const index = data.findIndex(x => x.id === existingId);
+    if(index >= 0) data[index] = item;
+  } else {
+    data.push(item);
+  }
+  setData(data);
+  renderTable();
+  showStatus("saveStatus", existingId ? "Prediction updated successfully." : "Prediction saved successfully.");
+  resetForm();
+  showStatus("saveStatus", existingId ? "Prediction updated successfully." : "Prediction saved successfully.");
 });
-function editPrediction(id){const p=getData().find(x=>x.id===id);if(!p)return;document.getElementById("editId").value=p.id;document.getElementById("league").value=p.league;document.getElementById("confidence").value=p.confidence;document.getElementById("home").value=p.home;document.getElementById("away").value=p.away;document.getElementById("pick").value=p.pick;document.getElementById("markets").value=(p.markets||[]).join(", ");document.getElementById("analysis").value=p.analysis||"";window.scrollTo({top:0,behavior:"smooth"})}
-function deletePrediction(id){if(confirm("Delete this prediction?")){setData(getData().filter(x=>x.id!==id));renderTable()}}
-document.addEventListener("DOMContentLoaded",()=>{if(sessionStorage.getItem("jeAdmin")==="1")showDashboard()})
+
+$("loginButton").addEventListener("click", login);
+$("logoutButton").addEventListener("click", logout);
+$("clearButton").addEventListener("click", resetForm);
+$("togglePassword").addEventListener("click", () => {
+  const input = $("password");
+  const visible = input.type === "text";
+  input.type = visible ? "password" : "text";
+  $("togglePassword").textContent = visible ? "Show" : "Hide";
+});
+$("password").addEventListener("keydown", e => {
+  if(e.key === "Enter") login();
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  if(sessionStorage.getItem("jeAdmin") === "1"){
+    $("loginBox").hidden = true;
+    $("dashboard").hidden = false;
+    renderTable();
+  }
+});
