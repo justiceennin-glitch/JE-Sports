@@ -1,43 +1,106 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Bet Slip Feature</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>JE Sports — Football Hub</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="page">
-    <section class="bet-slip" id="betSlip">
-      <header>
-        <h1>Bet Slip</h1>
-        <button id="closeBtn" aria-label="Close">&times;</button>
-      </header>
+<header class="topbar">
+  <div class="brand"><span class="brand-mark">J</span><b>JE<span>SPORTS</span></b></div>
+  <button class="icon-btn" id="searchBtn">⌕</button>
+  <button class="pill" id="betsBtn">My Bets <em id="betCount">0</em></button>
+  <button class="pill balance">₵0.00</button>
+  <button class="icon-btn">♙</button>
+</header>
 
-      <div class="selection">
-        <strong>Bournemouth vs Brentford</strong>
-        <span>· Odds 3.55</span>
-      </div>
+<nav class="tabs">
+  <button class="active" data-page="home">Home</button>
+  <button data-page="live">Live</button>
+  <button data-page="sports">Sports</button>
+  <button data-page="games">Games</button>
+  <button data-page="virtual">Virtual</button>
+  <button data-page="jackpot">Jackpot</button>
+</nav>
 
-      <div class="divider"></div>
-
-      <div class="total">
-        <span>Total Odds</span>
-        <strong>3.55</strong>
-      </div>
-
-      <button class="place" id="placeBet">Place Demo Bet</button>
-    </section>
-  </main>
-
-  <div class="overlay hidden" id="overlay">
-    <div class="modal" role="dialog" aria-modal="true">
-      <h2>Your Website</h2>
-      <p>Demo bet created. Connect your own payment/betting backend for real transactions.</p>
-      <button id="okBtn">OK</button>
-    </div>
+<main>
+<section id="home" class="page active">
+  <div class="quick-grid">
+    <button data-page="sports">⚽<small>Soccer</small></button>
+    <button data-page="sports">▣<small>Today</small></button>
+    <button id="filterBtn">⌁<small>Odds Filter</small></button>
+    <button data-page="virtual">♜<small>Instant<br>Virtuals</small></button>
+    <button id="codeBtn">▤<small>Booking<br>Codes</small></button>
+    <button data-page="sports">▦<small>ALL</small></button>
   </div>
 
-  <script src="script.js"></script>
+  <section class="panel casino">
+    <div class="section-head"><h2>🎮 GAMES</h2><button data-page="games">More ›</button></div>
+    <div class="game-card"><div class="ball">⚽</div><div><strong>SUPER KICK</strong><p>Free random rewards & football fun</p></div><button class="play" data-page="games">PLAY NOW</button></div>
+  </section>
+
+  <section class="panel">
+    <div class="section-head"><h2>⚽ FEATURED MATCHES</h2><button data-page="sports">More ›</button></div>
+    <div class="league-row">
+      <button class="league active">Premier League</button><button class="league">La Liga</button>
+      <button class="league">Bundesliga</button><button class="league">Serie A</button><button class="league">Ligue 1</button>
+    </div>
+    <div class="match-list" id="featured"></div>
+  </section>
+</section>
+
+<section id="live" class="page">
+  <div class="hero"><h1>LIVE MATCHES</h1><p>Follow scores and match events.</p></div>
+  <div class="match-list" id="liveMatches"></div>
+</section>
+
+<section id="sports" class="page">
+  <div class="hero"><h1>SPORTS</h1><p>Football markets, leagues and odds.</p></div>
+  <div class="chips"><button class="selected">Football</button><button>Basketball</button><button>Tennis</button><button>Esports</button></div>
+  <div class="match-list" id="sportsMatches"></div>
+</section>
+
+<section id="games" class="page">
+  <div class="hero"><h1>GAMES</h1><p>Demo game lobby — connect your own game provider/API for real games.</p></div>
+  <div class="game-grid">
+    <article>⚽<b>Super Kick</b><button>Play</button></article>
+    <article>🏆<b>Penalty Star</b><button>Play</button></article>
+    <article>🎯<b>Goal Rush</b><button>Play</button></article>
+    <article>🎰<b>Virtual Football</b><button data-page="virtual">Open</button></article>
+  </div>
+</section>
+
+<section id="virtual" class="page">
+  <div class="hero"><h1>VIRTUAL SPORTS</h1><p>Demo virtual fixtures. Results are simulated locally.</p></div>
+  <div class="virtual-card"><span>VIRTUAL FOOTBALL 90</span><b>City Stars vs United FC</b><div class="odds"><button>1 <strong>1.82</strong></button><button>X <strong>3.60</strong></button><button>2 <strong>4.10</strong></button></div></div>
+  <button class="primary" id="simulate">Generate Next Fixture</button>
+</section>
+
+<section id="jackpot" class="page">
+  <div class="hero"><h1>JACKPOT</h1><p>Pick your favourite fixtures and build a ticket.</p></div>
+  <div class="ticket">🏆 <b>Weekend Football Jackpot</b><p>Choose 5 matches from the Sports page.</p><button class="primary" data-page="sports">Choose Matches</button></div>
+</section>
+</main>
+
+<div id="betslip" class="drawer">
+  <div class="drawer-head"><h2>Bet Slip</h2><button id="closeBet">×</button></div>
+  <div id="slipItems"><p class="muted">Your bet slip is empty.</p></div>
+  <div class="slip-total"><span>Total Odds</span><b id="totalOdds">0.00</b></div>
+  <button class="primary" id="placeDemo">Place Demo Bet</button>
+</div>
+
+<div id="codeModal" class="modal"><div class="modal-box"><button class="close">×</button><h2>Booking Codes</h2><p>Enter a booking code to load a saved demo ticket.</p><input id="bookingInput" placeholder="e.g. JESPORTS123"><button class="primary" id="loadCode">Load Code</button><p id="codeResult"></p></div></div>
+
+<div id="filterModal" class="modal"><div class="modal-box"><button class="close">×</button><h2>Odds Filter</h2><label>Minimum odds <input type="number" id="minOdds" value="1.50" step=".10"></label><label>Maximum odds <input type="number" id="maxOdds" value="5.00" step=".10"></label><button class="primary" id="applyFilter">Apply Filter</button></div></div>
+
+<div class="bottom-nav">
+  <button class="active" data-page="home">⌂<small>Home</small></button>
+  <button data-page="live">◉<small>Live</small></button>
+  <button id="bottomSlip">▤<small>My Bets</small><em id="bottomCount">0</em></button>
+  <button data-page="sports">⚽<small>Sports</small></button>
+  <button>♙<small>Me</small></button>
+</div>
+<script src="app.js"></script>
 </body>
 </html>
