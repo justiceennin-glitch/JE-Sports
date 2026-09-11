@@ -1,16 +1,25 @@
-# JE Sports — Automatic AI-Style Football Predictions
+# JE Sports — mobile sports app feature demo
 
-This version makes the prediction workflow automatic:
+This ZIP contains a responsive web app inspired by the feature layout in the supplied screenshot.
 
-1. Enter Home team and Away team.
-2. Optionally enter recent form such as `W W D L W`.
-3. Tap **Generate prediction automatically**.
-4. The site calculates estimated home/draw/away probabilities, a leading outcome, confidence, estimated scoreline, and a written analysis.
-5. Review and publish.
+Included:
+- Home dashboard
+- Soccer / Today / Odds Filter / Virtual / Booking Codes / All shortcuts
+- Featured matches and league tabs
+- Live matches screen
+- Sports screen with football markets
+- Bet slip with selections and total odds
+- Booking-code demo
+- Odds filtering
+- Games lobby
+- Virtual sports demo
+- Jackpot screen
+- Mobile bottom navigation
 
-## Important
-The prediction engine is a transparent **local AI-style/statistical heuristic**, not a connected AI service. It does not guarantee results and should be treated as football information/analysis only.
+Important:
+This is a FRONT-END DEMO. It does not provide real betting, real-money transactions, guaranteed predictions, live feeds, or bookmaker access. To make live scores/odds work, connect a legitimate sports-data API. To make payments or real betting work, use a properly licensed provider and comply with local laws.
 
-Live scores still require a legitimate football-data API. Do not expose private API keys in public GitHub code; a production setup should use a secure backend/proxy.
-
-Demo admin password: `JE2026`
+Run:
+1. Extract the ZIP.
+2. Open index.html in a browser.
+3. For deployment, upload the folder to a static host such as Netlify, Vercel, GitHub Pages, or your own hosting.
