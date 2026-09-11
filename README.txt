@@ -1,7 +1,5 @@
 JE SPORTS WEBSITE
 =================
-Open index.html in a browser to preview the green JE Sports homepage.
+Green mobile-friendly JE Sports homepage using the supplied JE Sports logo.
 
-The match data in this starter site is sample content. For real live scores,
-teams, odds, booking codes, or AI predictions, connect an appropriate licensed
-sports-data/API service rather than presenting sample data as real-time results.
+The match cards are sample content. Connect an appropriate licensed sports-data/API service before presenting live scores, odds, booking codes, or predictions as real-time data.
