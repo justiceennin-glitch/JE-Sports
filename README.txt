@@ -1,15 +1,19 @@
-BET SLIP FEATURE
+JE SPORTS — VIRTUAL REWARDS VERSION
+====================================
+This version adds a virtual rewards/redemption center.
+
+Included:
+- JE Coins balance
+- Non-cash virtual rewards
+- Redemption history
+- Mobile-friendly interface
+- Browser local storage
+
+It intentionally does not process real-money deposits, betting stakes,
+cash withdrawals, or money transfers.
 
 Files:
-- index.html  Main page
-- style.css   Design and responsive layout
-- script.js   Demo bet popup and buttons
-
-UPLOAD:
-1. Extract this ZIP.
-2. Upload the three files to the same folder on your website.
-3. Open index.html or integrate its HTML/CSS/JS into your existing site.
-
-IMPORTANT:
-This is a front-end demo only. It does not process real bets or payments.
-For real transactions, connect the Place Bet action to your authorized backend/API.
+index.html
+style.css
+app.js
+README.txt
